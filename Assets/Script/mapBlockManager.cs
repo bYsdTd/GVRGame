@@ -4,49 +4,71 @@ using System.Collections.Generic;
 
 public class mapBlockManager  
 {
-	private static mapBlockManager instance = null;
-	private static List<mapBlock> m_mapBlockList = new List<mapBlock>();
+	private mapBlock m_currentBlock = null;
+	private mapBlock m_nextBlock = null;
 
-	private static string[] m_prefabNames = new string[] {"mapBlockStraight", "mapBlockLeft", "mapBlockRight"};
+	private List<mapBlock> m_blockPool = new List<mapBlock>();
 
-	private static List<GameObject> m_prefabList = new List<GameObject>();
+	private GameObject m_rootGameObj = null;
 
-	public static mapBlockManager Instance()
+	public mapBlockManager()
 	{
-		if( instance == null )
-		{
-			instance = new mapBlockManager();
-		}
+		//init root
+		InitRoot();
 
-		return instance;
+		InitAllMapBlock();
+
+		InitStartPoint();
 	}
 
-	public static void InitAllMapBlock()
+	public void InitRoot()
 	{
-		for(int i = 0; i < m_prefabNames.Length; ++i)
-		{
-			GameObject prefab = Resources.Load(m_prefabNames[i]) as GameObject;
-			m_prefabList.Add(prefab);
-		}
-
+		m_rootGameObj = new GameObject("rootGameObj");
 	}
 
-	public static void generateNextBlock()
+	public void InitAllMapBlock()
 	{
-		var random = new System.Random();
+		string[] prefabNames = new string[]{ "Prefab/block1", "Prefab/block2", "Prefab/block3"};
 
-		int count = 5;
-		while(count > 0)
+		for(int i = 0; i < prefabNames.Length; ++i)
 		{
-			int randNum = random.Next(0, 2);
+			GameObject prefabObj = Resources.Load(prefabNames[i]) as GameObject;
 
-			mapBlock block = new mapBlock();
-			block.Init(m_prefabList[randNum]);
+			GameObject blockInstance = GameObject.Instantiate(prefabObj);
 
-			m_mapBlockList.Add(block);
+			mapBlock mapBlockInstance = new mapBlock(blockInstance);
+			mapBlockInstance.Deactive();
 
-			--count;
+			mapBlockInstance.instance.transform.SetParent(m_rootGameObj.transform);
+
+			m_blockPool.Add(mapBlockInstance);
 		}
+	}
+
+	public void InitStartPoint()
+	{
+		// 初始的时候先随机两个
+		System.Random rand = new System.Random();
+
+		int index1 = rand.Next(0, m_blockPool.Count-1);
+		m_currentBlock = m_blockPool[index1];
+		m_blockPool.RemoveAt(index1);
+		m_currentBlock.Active();
+
+		int type = 0;
+		m_currentBlock.type = type;
+		m_currentBlock.startPoint = Vector3.zero;
+
+
+		int index2 = rand.Next(0, m_blockPool.Count-1);
+		m_nextBlock = m_blockPool[index2];
+		m_blockPool.RemoveAt(index2);
+		m_nextBlock.Active();
+
+		type = 2;
+		m_nextBlock.type = type;
+
+		m_nextBlock.Attach(m_currentBlock);
 	}
 }
 

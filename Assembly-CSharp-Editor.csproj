@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{69071230-4520-CD77-0C05-076F28988ABB}</ProjectGuid>
+    <ProjectGuid>{69C544A6-1DFD-4CE3-AF0E-FED1B4D66B78}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -100,7 +100,7 @@
  <HintPath>/Applications/Unity5.3.4f1/Unity.app/Contents/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll</HintPath>
  </Reference>
  <Reference Include="Google.ProtocolBuffers">
- <HintPath>/Users/zhangyi/code/unity/GVRDemo/Assets/Plugins/Google.ProtocolBuffers.dll</HintPath>
+ <HintPath>/Users/zhangyi/code/unity/GVRGame/Assets/Plugins/Google.ProtocolBuffers.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>/Applications/Unity5.3.4f1/Unity.app/Contents/Frameworks/Managed/UnityEditor.Graphs.dll</HintPath>
@@ -123,7 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{10B9CB58-483F-FC2C-039B-89704AFC636F}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+      <Project>{E3060A0A-694B-EDF6-6BD2-3230621AA153}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

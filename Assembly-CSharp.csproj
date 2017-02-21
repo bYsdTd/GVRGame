@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{10B9CB58-483F-FC2C-039B-89704AFC636F}</ProjectGuid>
+    <ProjectGuid>{E3060A0A-694B-EDF6-6BD2-3230621AA153}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -133,6 +133,7 @@
      <Compile Include="Assets\GoogleVR\Scripts\Utilities\GvrFPS.cs" />
      <Compile Include="Assets\GoogleVR\Scripts\Utilities\GvrIntent.cs" />
      <Compile Include="Assets\GoogleVR\Scripts\Video\GvrVideoPlayerTexture.cs" />
+     <Compile Include="Assets\Script\lanch.cs" />
      <Compile Include="Assets\Script\mapBlock.cs" />
      <Compile Include="Assets\Script\mapBlockManager.cs" />
      <None Include="Assets\GoogleVR\Distortion\GvrDistortion.cginc" />
@@ -162,7 +163,7 @@
  <HintPath>/Applications/Unity5.3.4f1/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="Google.ProtocolBuffers">
- <HintPath>/Users/zhangyi/code/unity/GVRDemo/Assets/Plugins/Google.ProtocolBuffers.dll</HintPath>
+ <HintPath>/Users/zhangyi/code/unity/GVRGame/Assets/Plugins/Google.ProtocolBuffers.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
