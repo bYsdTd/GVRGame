@@ -3,15 +3,20 @@ using System.Collections;
 
 public class lanch : MonoBehaviour {
 
+	private mapBlockManager manager = null;
 	// Use this for initialization
 	void Start () 
 	{
-		mapBlockManager manager = new mapBlockManager();
-
+		manager = new mapBlockManager();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update () 
+	{
+		float dt = Time.deltaTime;
+		if(manager != null)
+		{
+			manager.Update(dt);	
+		}
 	}
 }

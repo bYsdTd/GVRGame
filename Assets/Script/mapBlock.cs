@@ -105,4 +105,44 @@ public class mapBlock
 		endPoint = tmp;
 	}
 
+	private float _moveDistance;
+
+	public void InitStartBlock()
+	{
+		// 当前开始移动了，type 设置成0
+		type = 0;
+		startPoint = Vector3.zero;
+		_moveDistance = 0.0f;
+	}
+
+	public void UpdateMoveOther(float moveDistance)
+	{
+		Vector3 tmp = startPoint;
+		tmp.z -= moveDistance;
+		startPoint = tmp;
+
+		instance.transform.position = startPoint;
+
+	}
+
+	public bool UpdateMoveCurrent(float moveDistance, out float realMoveDistance)
+	{
+		// 当前的地图块是需要判断是否移动到终点的，其他的是跟随移动
+		bool changeNextBlock = false;
+		_moveDistance += moveDistance;
+		if(_moveDistance >= length)
+		{
+			moveDistance = _moveDistance - length;
+			changeNextBlock = true;
+		}
+
+		Vector3 tmp = startPoint;
+		tmp.z -= moveDistance;
+		startPoint = tmp;
+
+		instance.transform.position = startPoint;
+
+		realMoveDistance = moveDistance;
+		return changeNextBlock;
+	}
 }

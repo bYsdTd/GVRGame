@@ -50,24 +50,79 @@ public class mapBlockManager
 		// 初始的时候先随机两个
 		System.Random rand = new System.Random();
 
+		m_currentBlock = generateBlock();
+		m_currentBlock.InitStartBlock();
+
+		m_nextBlock = generateBlock();
+		m_nextBlock.Attach(m_currentBlock);
+
+
+	}
+
+	public void Update(float dt)
+	{
+		// 更新当前块和下个块，判断是否该转向
+		float moveSpeed = 20;
+		float moveDistance = dt * moveSpeed;
+
+		float realMoveDistance = moveDistance;
+		bool shouldChange = m_currentBlock.UpdateMoveCurrent(moveDistance, out realMoveDistance);
+
+		m_nextBlock.UpdateMoveOther(realMoveDistance);
+
+		if(shouldChange)
+		{
+			// 切换地图的逻辑
+
+			handleSwitchMapBlock();
+		}
+	}
+
+	private mapBlock generateBlock()
+	{
+		System.Random rand = new System.Random();
 		int index1 = rand.Next(0, m_blockPool.Count-1);
-		m_currentBlock = m_blockPool[index1];
+		mapBlock block = m_blockPool[index1];
 		m_blockPool.RemoveAt(index1);
-		m_currentBlock.Active();
+		block.Active();
 
-		int type = 0;
-		m_currentBlock.type = type;
-		m_currentBlock.startPoint = Vector3.zero;
+		int type = rand.Next(0, 2);
+		block.type = type;
+
+		return block;
+	}
+
+	private void recycleBlock(mapBlock block)
+	{
+		m_blockPool.Add(block);
+		block.Deactive();
+	}
+
+	private void handleSwitchMapBlock()
+	{
+		recycleBlock(m_currentBlock);
+
+		if(m_nextBlock.type != 0)
+		{
+			// 需要处理旋转的逻辑
+			// 先简化旋转的动画，这里直接转了
+			doSwitch();
+		}
+		else
+		{
+			doSwitch();
+		}
 
 
-		int index2 = rand.Next(0, m_blockPool.Count-1);
-		m_nextBlock = m_blockPool[index2];
-		m_blockPool.RemoveAt(index2);
-		m_nextBlock.Active();
+	}
 
-		type = 2;
-		m_nextBlock.type = type;
+	private void doSwitch()
+	{
+		m_currentBlock = m_nextBlock;
+		m_currentBlock.InitStartBlock();
 
+		// 生成一个新的
+		m_nextBlock = generateBlock();
 		m_nextBlock.Attach(m_currentBlock);
 	}
 }
