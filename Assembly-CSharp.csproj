@@ -133,6 +133,8 @@
      <Compile Include="Assets\GoogleVR\Scripts\Utilities\GvrFPS.cs" />
      <Compile Include="Assets\GoogleVR\Scripts\Utilities\GvrIntent.cs" />
      <Compile Include="Assets\GoogleVR\Scripts\Video\GvrVideoPlayerTexture.cs" />
+     <Compile Include="Assets\Script\Timer.cs" />
+     <Compile Include="Assets\Script\TimerManager.cs" />
      <Compile Include="Assets\Script\lanch.cs" />
      <Compile Include="Assets\Script\mapBlock.cs" />
      <Compile Include="Assets\Script\mapBlockManager.cs" />

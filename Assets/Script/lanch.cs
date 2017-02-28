@@ -18,5 +18,7 @@ public class lanch : MonoBehaviour {
 		{
 			manager.Update(dt);	
 		}
+
+		TimerManager.Instance().Tick(dt);
 	}
 }

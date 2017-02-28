@@ -11,8 +11,12 @@ public class mapBlockManager
 
 	private GameObject m_rootGameObj = null;
 
+	private bool m_switchingMapBlock { set; get;}
+
 	public mapBlockManager()
 	{
+		m_switchingMapBlock = false;
+
 		//init root
 		InitRoot();
 
@@ -61,20 +65,28 @@ public class mapBlockManager
 
 	public void Update(float dt)
 	{
-		// 更新当前块和下个块，判断是否该转向
-		float moveSpeed = 20;
-		float moveDistance = dt * moveSpeed;
-
-		float realMoveDistance = moveDistance;
-		bool shouldChange = m_currentBlock.UpdateMoveCurrent(moveDistance, out realMoveDistance);
-
-		m_nextBlock.UpdateMoveOther(realMoveDistance);
-
-		if(shouldChange)
+		if(m_switchingMapBlock)
 		{
-			// 切换地图的逻辑
+			// 正在切换, 不做任何事
+		}
+		else
+		{
+			// 更新当前块和下个块，判断是否该转向
+			float moveSpeed = 20;
+			float moveDistance = dt * moveSpeed;
 
-			handleSwitchMapBlock();
+			float realMoveDistance = moveDistance;
+			bool shouldChange = m_currentBlock.UpdateMoveCurrent(moveDistance, out realMoveDistance);
+
+			m_nextBlock.UpdateMoveOther(realMoveDistance);
+
+			if(shouldChange)
+			{
+				m_switchingMapBlock = true;
+
+				// 切换地图的逻辑
+				handleSwitchMapBlock();
+			}
 		}
 	}
 
@@ -104,13 +116,36 @@ public class mapBlockManager
 
 		if(m_nextBlock.type != 0)
 		{
-			// 需要处理旋转的逻辑
-			// 先简化旋转的动画，这里直接转了
-			doSwitch();
+			float turnTime = 1.0f;
+			float turnSpeed = 90/turnTime;
+			float turnAngle = -90;
+
+			if(m_nextBlock.type == 2)
+			{
+				turnSpeed = - turnSpeed;
+				turnAngle = 90;
+			}
+
+			TimerManager.Instance().RepeatCallFunc(delegate(float dt) {
+
+				turnAngle += turnSpeed * dt;
+
+				m_nextBlock.instance.transform.rotation = Quaternion.AngleAxis(turnAngle, Vector3.up);
+
+				}, 0, turnTime, null, delegate() {
+
+				// 旋转结束
+				doSwitch();
+
+				m_switchingMapBlock = false;
+			});
+
 		}
 		else
 		{
 			doSwitch();
+
+			m_switchingMapBlock = false;
 		}
 
 
